@@ -1,0 +1,253 @@
+openapi: 3.0.0
+info:
+  title: openPoll
+  description: .
+  version: 0.0.1
+
+paths:
+  /user/login:
+    post:
+      summary: Login
+      description: User Login
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              example:
+                email: "example@example.com"
+  /user/register:
+    post:
+      summary: Register
+      description: User Register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                name:
+                  type: string
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              example:
+                email: "example@example.com"
+                name: "John Doe"
+
+  /poll:
+    get:
+      summary: Get Polls
+      description: Get Polls
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              example:
+                message: "Success"
+                errors: []
+                data:
+                  - label: "Poll 1"
+                    id: "1"
+                  - label: "Poll 2"
+                    id: "2"
+
+  /poll/{id}:
+    get:
+      summary: Get Poll
+      description: Get Poll
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Poll ID
+          schema:
+            type: integer
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              example:
+                message: "Success"
+                errors: []
+                data:
+                  label: "Poll 1"
+                  id: "1"
+                  options:
+                    - label: "Option 1"
+                      id: "1"
+                    - label: "Option 2"
+                      id: "2"
+                    - label: "Option 3"
+                      id: "3"
+                isPublished: true
+                url: "http://localhost:3000/poll/1"
+
+  /poll/create:
+    post:
+      summary: Create Poll
+      description: Create Poll
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  type: string
+                options:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      label:
+                        type: string
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              example:
+                message: "Success"
+                errors: []
+                data:
+                  label: "Poll 1"
+                  id: "1"
+                  options:
+                    - label: "Option 1"
+                      id: "1"
+                    - label: "Option 2"
+                      id: "2"
+                    - label: "Option 3"
+                      id: "3"
+                  isPublished: false
+
+  /poll/{id}/edit:
+    patch:
+      summary: Edit Poll
+      description: Edit Poll
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Poll ID
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  type: string
+                options:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      label:
+                        type: string
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              example:
+                message: "Success"
+                errors: []
+                data:
+                  label: "Poll 1"
+                  id: "1"
+                  options:
+                    - label: "Option 1"
+                      id: "1"
+                    - label: "Option 2"
+                      id: "2"
+                    - label: "Option 3"
+                      id: "3"
+                  isPublished: false
+
+  /poll/{id}/publish:
+    post:
+      summary: Publish Poll
+      description: Publish Poll
+
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              example:
+                message: "Success"
+                errors: []
+                data:
+                  label: "Poll 1"
+                  id: "1"
+                  isPublished: true
+                  url: "http://localhost:3000/poll/1"
+
+  /poll/{id}/unpublish:
+    post:
+      summary: Publish Poll
+      description: Publish Poll
+
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              example:
+                message: "Success"
+                errors: []
+                data:
+                  label: "Poll 1"
+                  id: "1"
+                  isPublished: false
+
+  /poll/{id}/delete:
+    delete:
+      summary: Delete Poll
+      description: Delete Poll
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Poll ID
+          schema:
+            type: integer
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              example:
+                message: "Success"
+                errors: []
+                data: {}
+
+components:
+  schemas:
+    user:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        name:
+          type: string
+          example: "John Doe"
+        email:
+          type: string
+          example: "example@example.com"
+        password:
+          type: string
+          example: "********"
