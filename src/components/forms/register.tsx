@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { register } from "../../services/user.service";
 import { RegisterSchema } from "../../schemas/auth/register.schema";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 export const Register = () => {
   const [formData, setFormData] = useState({
@@ -15,7 +16,7 @@ export const Register = () => {
     password: "",
     confirmPassword: "",
   });
-
+  const navigate = useNavigate();
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -27,7 +28,7 @@ export const Register = () => {
         name: formData.name,
         password: formData.password,
       });
-
+      navigate("/user");
       //   console.log(response.data);
     } catch (error: unknown) {
       console.error(error);
