@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Home } from "./pages/public/home";
-import { UserDashboard } from "./pages/user/dashboard";
-import { SignUp } from "./pages/auth/signup";
-import { SignIn } from "./pages/auth/signin";
-
+import { Home } from "./app/pages/public/home";
+import { SignIn } from "./app/pages/auth/signin";
+import { SignUp } from "./app/pages/auth/signup";
+import { UserDashboard } from "./app/pages/user/dashboard";
+import { CreatePoll } from "./app/pages/user/create-poll";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +35,16 @@ export const router = createBrowserRouter([
       {
         path: "",
         element: <UserDashboard />,
+      },
+    ],
+  },
+  {
+    path: "user",
+    element: "",
+    children: [
+      {
+        path: "create-poll",
+        element: <CreatePoll />,
       },
     ],
   },
