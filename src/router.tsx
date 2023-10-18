@@ -3,7 +3,7 @@ import { Home } from "./app/pages/public/home";
 import { SignIn } from "./app/pages/auth/signin";
 import { SignUp } from "./app/pages/auth/signup";
 import { UserDashboard } from "./app/pages/user/dashboard";
-import { CreatePoll } from "./app/pages/user/create-poll";
+import { CreatePoll } from "./app/pages/polls/create-poll";
 
 export const router = createBrowserRouter([
   {
