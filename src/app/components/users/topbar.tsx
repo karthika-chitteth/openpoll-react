@@ -1,5 +1,7 @@
 import logo from "../../assets/logo.svg";
+import { useProfileContext } from "../../context/profile.context";
 export const TopBar = () => {
+  const { value } = useProfileContext();
   return (
     <>
       <header className="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-gray-900 text-sm py-4 dark:bg-gray-800">
@@ -24,7 +26,7 @@ export const TopBar = () => {
                   fill="currentColor"
                   viewBox="0 0 16 16">
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
                   />
                 </svg>
@@ -55,25 +57,23 @@ export const TopBar = () => {
                   height="18"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  stroke-width="2"
+                  strokeWidth="2"
                   fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round">
+                  strokeLinecap="round"
+                  strokeLinejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                   <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"></path>
                   <path d="M7 12h14l-3 -3m0 6l3 -3"></path>
                 </svg>
               </button>
-              <button
-                id="hs-dropdown-with-header"
-                type="button"
-                className="inline-flex flex-shrink-0 justify-center items-center gap-2 h-[2.375rem] w-[2.375rem] rounded-full font-medium hover:bg-white/[.2] text-white align-middle focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all text-xs">
-                <img
-                  className="inline-block h-[2.375rem] w-[2.375rem] rounded-full"
-                  src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80"
-                  alt="Image Description"
-                />
-              </button>
+
+              <div>
+                {value !== null
+                  ? Object.keys(value).map((key) => (
+                      <div key={key}>{value[key]}</div>
+                    ))
+                  : null}
+              </div>
             </div>
           </div>
         </nav>

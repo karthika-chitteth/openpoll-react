@@ -1,9 +1,13 @@
-import { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { register } from "../../services/user.service";
 import { RegisterSchema } from "../../schemas/auth/register.schema";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { useProfileContext } from "../../context/profile.context";
+
 export const Register = () => {
+  const { setValue } = useProfileContext();
+
   const [formData, setFormData] = useState({
     email: "", // required
     name: "", // required
@@ -22,14 +26,17 @@ export const Register = () => {
 
     try {
       await RegisterSchema.validate(formData, { abortEarly: false });
-      //   const response = await register({
-      await register({
+      const response = await register({
         email: formData.email,
         name: formData.name,
         password: formData.password,
       });
       navigate("/user");
-      //   console.log(response.data);
+      console.log(response);
+
+      setValue(response);
+      localStorage.setItem("value", setValue(response));
+      // setValue("John");
     } catch (error: unknown) {
       console.error(error);
       if (error instanceof yup.ValidationError) {
@@ -64,8 +71,7 @@ export const Register = () => {
                 Already have an account?
                 <a
                   className="text-blue-600 decoration-2 hover:underline font-medium"
-                  href="/auth/signin"
-                >
+                  href="/auth/signin">
                   Sign in here
                 </a>
               </p>
@@ -143,16 +149,14 @@ export const Register = () => {
                           height="16"
                           fill="currentColor"
                           viewBox="0 0 16 16"
-                          aria-hidden="true"
-                        >
+                          aria-hidden="true">
                           <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
                         </svg>
                       </div>
                     </div>
                     <p
                       className="text-xs text-red-600 mt-2"
-                      id="password-error"
-                    >
+                      id="password-error">
                       {formErrors.password}
                     </p>
                   </div>
@@ -179,24 +183,21 @@ export const Register = () => {
                           height="16"
                           fill="currentColor"
                           viewBox="0 0 16 16"
-                          aria-hidden="true"
-                        >
+                          aria-hidden="true">
                           <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
                         </svg>
                       </div>
                     </div>
                     <p
                       className="text-xs text-red-600 mt-2"
-                      id="confirm-password-error"
-                    >
+                      id="confirm-password-error">
                       {formErrors.confirmPassword}
                     </p>
                   </div>
 
                   <button
                     type="submit"
-                    className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-                  >
+                    className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                     Sign up
                   </button>
                 </div>

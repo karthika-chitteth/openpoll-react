@@ -1,4 +1,28 @@
+import { useState } from "react";
+
 export const MultiChoice = () => {
+  const [optionCount, setOptionCount] = useState(1);
+  const addOption = () => {
+    setOptionCount(optionCount + 1); // Increase the count when adding an option
+  };
+
+  const removeOption = () => {
+    if (optionCount > 1) {
+      setOptionCount(optionCount - 1); // Decrease the count when removing an option, but keep at least one option
+    }
+  };
+  const optionInputs = [];
+  for (let i = 0; i < optionCount; i++) {
+    optionInputs.push(
+      <div className="flex inline-flex" key={i}>
+        <input
+          type="text"
+          className="py-3 px-5 mb-5 block w-full border-solid border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+          placeholder="Add options"
+        />
+      </div>
+    );
+  }
   return (
     <>
       <div className="max-w-[85rem] w-full mx-auto px-4 mt-5 flex flex-col">
@@ -46,24 +70,19 @@ export const MultiChoice = () => {
           </li>
         </ul> */}
         <h2 className="mt-2 mb-5 text-lg  text-gray-900 font-bold">Options</h2>
-        <div className="flex inline-flex">
+
+        {/* <div className="flex inline-flex">
           <input
             type="text"
             className="py-3 px-5 block w-full border-solid border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
             placeholder="Add options"
           />
-        </div>
-        <div className="flex inline-flex">
-          <input
-            type="text"
-            className="py-3 px-5 block w-full border-solid border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
-            placeholder="Add options"
-          />
-        </div>
+        </div> */}
+        {optionInputs}
         <button
           type="button"
           className="w-[10rem] mt-5 py-1 px-1 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-        >
+          onClick={addOption}>
           <svg
             stroke="currentColor"
             fill="currentColor"
@@ -71,16 +90,20 @@ export const MultiChoice = () => {
             viewBox="0 0 24 24"
             height="30"
             width="30"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+            xmlns="http://www.w3.org/2000/svg">
             <path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z"></path>
           </svg>
           Add options
         </button>
         <button
           type="button"
-          className="w-[10rem] h-[2.5rem] mt-5 py-1 px-1 inline-flex justify-center relative flex items-end w-full items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-        >
+          className="w-[10rem] h-[2.5rem] mt-2 py-1 px-1 inline-flex justify-center relative flex items-end w-full items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover-bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+          onClick={removeOption}>
+          Remove Option
+        </button>
+        <button
+          type="button"
+          className="w-[10rem] h-[2.5rem] mt-5 py-1 px-1 inline-flex justify-center relative flex items-end w-full items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
           Create
         </button>
       </div>
