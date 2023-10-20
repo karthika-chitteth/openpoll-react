@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
 const apiInstance = axios.create({
-  baseURL: "https://openpoll.azurewebsites.net/api/",
-  // baseURL: "http://localhost:3000",
+  // baseURL: "https://openpoll.azurewebsites.net/api/",
+  baseURL: "http://localhost:3000",
 });
 apiInstance.interceptors.request.use((config) => {
   return config;

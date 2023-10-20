@@ -1,7 +1,7 @@
 import logo from "../../assets/logo.svg";
-import { useProfileContext } from "../../context/profile.context";
+// import { useProfileContext } from "../../context/profile.context";
 export const TopBar = () => {
-  const { value } = useProfileContext();
+  // const { value } = useProfileContext();
   return (
     <>
       <header className="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-gray-900 text-sm py-4 dark:bg-gray-800">
@@ -68,11 +68,11 @@ export const TopBar = () => {
               </button>
 
               <div>
-                {value !== null
+                {/* {value !== null
                   ? Object.keys(value).map((key) => (
                       <div key={key}>{value[key]}</div>
                     ))
-                  : null}
+                  : null} */}
               </div>
             </div>
           </div>

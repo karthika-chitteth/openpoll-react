@@ -14,7 +14,8 @@ export const register = async (
   payload: RegisterPayload
 ): Promise<ApiResponse<RegisterResponse>> => {
   const response: ApiResponse<RegisterResponse> = await apiInstance
-    .post(`User/register`, payload)
+    // .post(`User/register`, payload)
+    .post(`/users`, payload)
     .then((res) => res.data);
   return response;
 };
