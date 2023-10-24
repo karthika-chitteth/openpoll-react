@@ -14,16 +14,15 @@ export const register = async (
   payload: RegisterPayload
 ): Promise<ApiResponse<RegisterResponse>> => {
   const response: ApiResponse<RegisterResponse> = await apiInstance
-    // .post(`User/register`, payload)
-    .post(`/users`, payload)
+    .post(`User/register`, payload)
+    // .post(`/users`, payload)
     .then((res) => res.data);
   return response;
 };
-export const login = async (
-  payload: LoginPayload
-): Promise<ApiResponse<LoginResponse>> => {
-  const response: ApiResponse<LoginResponse> = await apiInstance
-    .post(`/users`, payload)
+export const login = async (payload: LoginPayload): Promise<LoginResponse> => {
+  const response: LoginResponse = await apiInstance
+    // .post(`/users`, payload)
+    .post(`/User/login`, payload)
     .then((res) => res.data);
   return response;
 };

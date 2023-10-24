@@ -1,8 +1,11 @@
 export interface CreatePollPayload {
-  label: string;
+  questions: QuestionsPayload;
+}
+export interface QuestionsPayload {
+  title: string;
   type: string;
   options: OptionsPayload[];
 }
 export interface OptionsPayload {
-  label: string;
+  title: string;
 }

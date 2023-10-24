@@ -1,4 +1,27 @@
+import { useEffect, useState } from "react";
+import { listPoll } from "../../services/poll.service";
+import { CreatePollResponse } from "../../models/response/polls/polls.response";
+
 export const TableList = () => {
+  const [polls, setPolls] = useState<CreatePollResponse[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const pollData = await listPoll();
+      // Update the state with the fetched data
+      // setPolls(pollData);
+
+      if (pollData && Array.isArray(pollData.data)) {
+        console.log("pollData", pollData);
+        // Assuming pollData is an array of CreatePollResponse
+        setPolls(pollData.data);
+      }
+    };
+    console.log("iiiiiiiiiiiii", polls);
+    fetchData();
+  }, []);
+
+  console.log("uuuuuuuu", polls);
   return (
     <>
       <div className="max-w-[85rem] w-full mx-auto px-4 mt-5 flex flex-col">
@@ -13,39 +36,48 @@ export const TableList = () => {
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                    >
                       Polls
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
+                    >
                       Status
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                      className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase"
+                    >
                       Action
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="odd:bg-white even:bg-gray-100 dark:odd:bg-slate-900 dark:even:bg-slate-800">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                      Are you familiar with low code platforms?
-                    </td>
-                    <td className="px-6 py-4 text-center whitespace-nowrap text-red-600	text-sm font-medium text-gray-800 dark:text-gray-200">
-                      Inactive
-                    </td>
+                  {polls.map((poll, index) => (
+                    <tr
+                      key={index}
+                      className="odd:bg-white even:bg-gray-100 dark:odd:bg-slate-900 dark:even:bg-slate-800"
+                    >
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                        {poll.questions.title}
+                      </td>
+                      <td className="px-6 py-4 text-center whitespace-nowrap text-red-600	text-sm font-medium text-gray-800 dark:text-gray-200">
+                        {poll.isActive ? "Active" : "In Active"}
+                      </td>
 
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <button
-                        type="button"
-                        className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-green-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                        Activate
-                      </button>
-                    </td>
-                  </tr>
-                  <tr className="odd:bg-white even:bg-gray-100 dark:odd:bg-slate-900 dark:even:bg-slate-800">
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button
+                          type="button"
+                          className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-green-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                        >
+                          {poll.isActive ? "Deactivate" : "Activate"}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                  {/* <tr className="odd:bg-white even:bg-gray-100 dark:odd:bg-slate-900 dark:even:bg-slate-800">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
                       Are you familiar with no code platforms?
                     </td>
@@ -56,11 +88,12 @@ export const TableList = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <button
                         type="button"
-                        className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-red-600 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                        className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-red-600 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                      >
                         Inactivate
                       </button>
                     </td>
-                  </tr>
+                  </tr> */}
                 </tbody>
               </table>
             </div>

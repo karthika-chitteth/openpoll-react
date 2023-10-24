@@ -32,10 +32,10 @@ export const Register = () => {
         password: formData.password,
       });
       navigate("/user");
-      console.log(response);
+      console.log(response.data?.name);
 
-      setValue(response);
-      localStorage.setItem("value", setValue(response));
+      setValue(response.data?.name);
+      localStorage.setItem("value", setValue(response.data?.name));
       // setValue("John");
     } catch (error: unknown) {
       console.error(error);

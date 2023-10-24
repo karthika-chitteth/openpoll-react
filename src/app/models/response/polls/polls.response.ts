@@ -1,7 +1,16 @@
-import { OptionsPayload } from "../../payload/polls/polls.payload.model";
-
 export interface CreatePollResponse {
-  label: string;
-  type: string;
+  title: string;
+  isActive: boolean;
+  userId: number;
+  questions: Questions;
+}
+interface Questions {
+  pollId: number;
+  title: string;
+  questionType: string;
   options: OptionsPayload[];
+}
+interface OptionsPayload {
+  title: string;
+  questionId: number;
 }
