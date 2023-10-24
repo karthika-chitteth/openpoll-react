@@ -8,7 +8,7 @@ import { useProfileContext } from "./app/context/profile.context";
 function App() {
   const { setValue } = useProfileContext();
   useEffect(() => {
-    console.log("abcd", setValue(localStorage.getItem("value")));
+    console.log("abcd", localStorage.getItem("value"));
 
     setValue(localStorage.getItem("value"));
   });

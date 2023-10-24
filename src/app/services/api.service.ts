@@ -2,8 +2,8 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 // import { useNavigate } from "react-router-dom";
 
 const apiInstance = axios.create({
-  // baseURL: "https://openpoll.azurewebsites.net/api/",
-  baseURL: "http://localhost:3000",
+  baseURL: "https://openpoll.azurewebsites.net/api/",
+  // baseURL: "http://localhost:3000",
 });
 // eslint-disable-next-line react-hooks/rules-of-hooks
 // const navigate = useNavigate();
@@ -12,7 +12,7 @@ apiInstance.interceptors.request.use((config) => {
 
   const token = localStorage.getItem("token");
   if (token) {
-    config.headers["Authorization"] = "Bearer " + token;
+    config.headers["token"] = token;
   }
   config.headers["Content-Type"] = "application/json";
   return config;

@@ -4,6 +4,7 @@ import { SignIn } from "./app/pages/auth/signin";
 import { SignUp } from "./app/pages/auth/signup";
 import { UserDashboard } from "./app/pages/user/dashboard";
 import { CreatePoll } from "./app/pages/polls/create-poll";
+import { PollDetails } from "./app/pages/polls/poll-details";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
       {
         path: "create-poll",
         element: <CreatePoll />,
+      },
+      {
+        path: "poll-details",
+        element: <PollDetails />,
       },
     ],
   },

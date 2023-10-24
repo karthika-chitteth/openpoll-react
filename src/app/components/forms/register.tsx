@@ -31,11 +31,12 @@ export const Register = () => {
         name: formData.name,
         password: formData.password,
       });
-      navigate("/user");
-      console.log(response.data?.name);
+      navigate("/users");
+      console.log(response);
 
       setValue(response.data?.name);
       localStorage.setItem("value", setValue(response.data?.name));
+      console.log("response.data?.name", response.data?.name);
       // setValue("John");
     } catch (error: unknown) {
       console.error(error);

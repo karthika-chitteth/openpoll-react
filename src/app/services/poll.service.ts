@@ -7,7 +7,7 @@ export const createPoll = async (
   payload: CreatePollPayload
 ): Promise<ApiResponse<CreatePollResponse>> => {
   const response: ApiResponse<CreatePollResponse> = await apiInstance
-    .post(`/polls`, payload)
+    .post(`/poll`, payload)
     .then((res) => res.data);
   return response;
 };
