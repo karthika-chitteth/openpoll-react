@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { listPoll } from "../../services/poll.service";
 import { CreatePollResponse } from "../../models/response/polls/polls.response";
+import { useNavigate } from "react-router-dom";
 
 export const TableList = () => {
   const [polls, setPolls] = useState<CreatePollResponse[]>([]);
@@ -22,6 +23,14 @@ export const TableList = () => {
   }, []);
 
   console.log("uuuuuuuu", polls);
+  const navigate = useNavigate();
+  const handleEditClick = async (id: number) => {
+    // const response = await getPoll(id);
+    // console.log("Poll created:", response);
+
+    navigate("/user/edit-poll/" + id);
+  };
+
   return (
     <>
       <div className="max-w-[85rem] w-full mx-auto px-4 mt-5 flex flex-col">
@@ -48,7 +57,7 @@ export const TableList = () => {
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
                     >
                       Action
                     </th>
@@ -58,21 +67,39 @@ export const TableList = () => {
                   {polls.map((poll, index) => (
                     <tr
                       key={index}
-                      className="odd:bg-white even:bg-gray-100 dark:odd:bg-slate-900 dark:even:bg-slate-800"
+                      className="odd:bg-white text-left even:bg-gray-100 dark:odd:bg-slate-900 dark:even:bg-slate-800"
                     >
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                        {poll.questions.title}
+                        {poll.questions.map((question, questionIndex) => (
+                          <div key={questionIndex}>{question.title}</div>
+                        ))}
                       </td>
                       <td className="px-6 py-4 text-center whitespace-nowrap text-red-600	text-sm font-medium text-gray-800 dark:text-gray-200">
                         {poll.isActive ? "Active" : "In Active"}
                       </td>
 
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                         <button
                           type="button"
-                          className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-green-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                          className="py-2 px-3 mx-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-green-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                         >
                           {poll.isActive ? "Deactivate" : "Activate"}
+                        </button>
+                        <button
+                          type="button"
+                          className="py-2 px-3 mx-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                          onClick={async () => {
+                            await handleEditClick(poll.id);
+                          }}
+                        >
+                          {"Edit"}
+                        </button>
+                        <button
+                          type="button"
+                          className="py-2 px-3 mx-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-red-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                          // onClick={handleDeleteClick}
+                        >
+                          {"Delete"}
                         </button>
                       </td>
                     </tr>

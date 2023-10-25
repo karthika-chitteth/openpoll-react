@@ -1,8 +1,9 @@
 export interface CreatePollResponse {
+  id: number;
   title: string;
   isActive: boolean;
   userId: number;
-  questions: Questions;
+  questions: Questions[];
 }
 interface Questions {
   pollId: number;

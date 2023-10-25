@@ -17,3 +17,12 @@ export const listPoll = async (): Promise<ApiResponse<CreatePollResponse>> => {
     .then((res) => res.data);
   return response;
 };
+export const getPoll = async (
+  id: number
+): Promise<ApiResponse<CreatePollResponse>> => {
+  const response: ApiResponse<CreatePollResponse> = await apiInstance
+    // .get(`/Poll/` + id)
+    .get(`/polls/` + id)
+    .then((res) => res.data);
+  return response;
+};

@@ -2,7 +2,7 @@ import {
   LoginPayload,
   RegisterPayload,
 } from "../models/payload/auth/user.payload.model";
-import { ApiResponse } from "../models/response/api.response";
+// import { ApiResponse } from "../models/response/api.response";
 import {
   LoginResponse,
   RegisterResponse,
@@ -12,8 +12,8 @@ import apiInstance from "./api.service";
 
 export const register = async (
   payload: RegisterPayload
-): Promise<ApiResponse<RegisterResponse>> => {
-  const response: ApiResponse<RegisterResponse> = await apiInstance
+): Promise<RegisterResponse> => {
+  const response: RegisterResponse = await apiInstance
     .post(`User/register`, payload)
     // .post(`/users`, payload)
     .then((res) => res.data);

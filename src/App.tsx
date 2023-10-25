@@ -7,11 +7,17 @@ import { useProfileContext } from "./app/context/profile.context";
 
 function App() {
   const { setValue } = useProfileContext();
+
   useEffect(() => {
     console.log("abcd", localStorage.getItem("value"));
 
-    setValue(localStorage.getItem("value"));
-  });
+    const storedValue = localStorage.getItem("value");
+    if (storedValue) {
+      const parsedValue = JSON.parse(storedValue);
+      setValue(parsedValue);
+    }
+  }, []);
+
   return (
     <>
       <RouterProvider router={router} />

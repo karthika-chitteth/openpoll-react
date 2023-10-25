@@ -29,12 +29,15 @@ export const Login = () => {
         email: formData.email,
         password: formData.password,
       });
-      navigate("/users");
+      if (response.name) {
+        navigate("/users");
+      }
+
       //   console.log(response.data);
       console.log(response.name);
 
       setValue(response.name);
-      localStorage.setItem("value", response.name);
+      localStorage.setItem("value", JSON.stringify(response.name));
       localStorage.setItem("token", response.uniqueId);
       // localStorage.setItem("value", setValue(response.data?.name));
     } catch (error: unknown) {

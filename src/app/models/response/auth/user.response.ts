@@ -3,6 +3,7 @@ export interface RegisterResponse {
   // access_token: string;
   // refreshToken?: string;
   name: string;
+  uniqueId: string;
 }
 export interface LoginResponse {
   name: string;

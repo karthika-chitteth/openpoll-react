@@ -51,6 +51,10 @@ export const router = createBrowserRouter([
         path: "poll-details",
         element: <PollDetails />,
       },
+      {
+        path: "edit-poll/:id",
+        element: <CreatePoll />,
+      },
     ],
   },
 ]);
