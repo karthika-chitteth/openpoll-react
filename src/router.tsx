@@ -6,6 +6,8 @@ import { UserDashboard } from "./app/pages/user/dashboard";
 import { CreatePoll } from "./app/pages/polls/create-poll";
 import { PollDetails } from "./app/pages/polls/poll-details";
 
+import BarChart from "./app/components/polls/barchart";
+
 export const router = createBrowserRouter([
   {
     path: "",
@@ -40,20 +42,34 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "user",
+    path: "users",
     element: "",
     children: [
       {
         path: "create-poll",
-        element: <CreatePoll />,
+        element: <CreatePoll isEdit={false} />,
+      },
+      {
+        path: "edit-poll/:id",
+        element: <CreatePoll isEdit={false} />,
       },
       {
         path: "poll-details",
         element: <PollDetails />,
       },
       {
-        path: "edit-poll/:id",
-        element: <CreatePoll />,
+        path: "poll-details/:id",
+        element: <PollDetails />,
+      },
+    ],
+  },
+  {
+    path: "poll",
+    element: "",
+    children: [
+      {
+        path: "result",
+        element: <BarChart />,
       },
     ],
   },

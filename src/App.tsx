@@ -13,8 +13,8 @@ function App() {
 
     const storedValue = localStorage.getItem("value");
     if (storedValue) {
-      const parsedValue = JSON.parse(storedValue);
-      setValue(parsedValue);
+      // const parsedValue = JSON.parse(storedValue);
+      setValue(storedValue);
     }
   }, []);
 

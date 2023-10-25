@@ -15,3 +15,12 @@ interface OptionsPayload {
   title: string;
   questionId: number;
 }
+
+export interface PublishPollResponse {
+  id: number;
+  title: string;
+  isActive: boolean;
+  userId: number;
+  uniqueId: string;
+  questions: Questions[];
+}
