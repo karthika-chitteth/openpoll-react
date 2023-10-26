@@ -15,8 +15,10 @@ export const PollDetailsContent = () => {
             <h1 className="block text-3xl font-bold text-gray-800 sm:text-4xl md:text-5xl lg:text-6xl dark:text-white mb-5">
               {pollTitle}
             </h1>
-            <a className="mt-5 text-lg text-gray-800 dark:text-gray-400">
-              {"https://openpoll.azurewebsites.net/" + uniqueId}
+            <a
+              className="mt-5 text-lg text-blue-500 dark:text-blue-100 "
+              href={"http://localhost:4001/poll/" + uniqueId}>
+              Poll here
             </a>
 
             <div className="mt-5 lg:mt-8 flex flex-col items-center gap-2 sm:flex-row sm:gap-3">

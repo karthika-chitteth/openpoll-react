@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 function QRCode(props: { value: string; size: number }) {
@@ -12,14 +11,9 @@ function QRCode(props: { value: string; size: number }) {
 }
 
 function QRCodeGenerator() {
-  const [qrCodeValue, setQRCodeValue] = useState<string>("");
   const location = useLocation();
   const uniqueId = location.state?.actiivatePoll.data?.uniqueId;
-  useEffect(() => {
-    // This effect runs whenever the `text` state changes.
-    // It sets the QR code value to the current text.
-    setQRCodeValue("https://openpoll.azurewebsites.net/" + uniqueId);
-  }, []);
+  const qrCodeValue = "http://localhost:4001/users/" + uniqueId;
 
   return <div>{qrCodeValue && <QRCode value={qrCodeValue} size={508} />}</div>;
 }

@@ -7,6 +7,7 @@ import { CreatePoll } from "./app/pages/polls/create-poll";
 import { PollDetails } from "./app/pages/polls/poll-details";
 
 import BarChart from "./app/components/polls/barchart";
+import { Poll } from "./app/pages/polls/poll";
 
 export const router = createBrowserRouter([
   {
@@ -72,5 +73,9 @@ export const router = createBrowserRouter([
         element: <BarChart />,
       },
     ],
+  },
+  {
+    path: "poll/:id",
+    element: <Poll />,
   },
 ]);
