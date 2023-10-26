@@ -35,12 +35,12 @@ export const Register = () => {
         navigate("/users");
       }
 
-      console.log(response);
+      // console.log(response);
 
       setValue(response.data.name);
       localStorage.setItem("value", JSON.stringify(response.data.name));
       localStorage.setItem("token", response.data.uniqueId);
-      console.log("response.data?.name", response.data.name);
+      // console.log("response.data?.name", response.data.name);
       // setValue("John");
     } catch (error: unknown) {
       console.error(error);

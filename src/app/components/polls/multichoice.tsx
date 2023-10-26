@@ -37,7 +37,7 @@ export const MultiChoice = ({ isEdit }: { isEdit: boolean }) => {
             setOptionCount(optionTitles.length);
           }
         }
-        console.log("edit", response);
+        // console.log("edit", response);
       } catch (error) {
         console.error("Error fetching poll:", error);
       }
@@ -86,15 +86,15 @@ export const MultiChoice = ({ isEdit }: { isEdit: boolean }) => {
       if (isEdit) {
         // If isEdit is true, call the update API
         response = await updatePoll(data, Number(id));
-        console.log(`Poll edited:`, response);
+        // console.log(`Poll edited:`, response);
       } else {
         // If isEdit is false, call the create API
         response = await createPoll(data);
-        console.log(`Poll created:`, response);
+        // console.log(`Poll created:`, response);
       }
 
       // Handle the response if needed
-      console.log("Poll created:", response);
+      // console.log("Poll created:", response);
       console.log(`Poll ${isEdit ? "edited" : "created"}:`, response);
       // Reset the form or handle success as required
       // Example: Clear input fields

@@ -2,6 +2,7 @@ import { CreatePollPayload } from "../models/payload/polls/polls.payload.model";
 import { ApiResponse } from "../models/response/api.response";
 import {
   CreatePollResponse,
+  PollQuestionResponse,
   PublishPollResponse,
 } from "../models/response/polls/polls.response";
 import apiInstance from "./api.service";
@@ -60,6 +61,14 @@ export const deactivatePoll = async (
 ): Promise<ApiResponse<PublishPollResponse>> => {
   const response: ApiResponse<PublishPollResponse> = await apiInstance
     .post(`/Poll/` + id + "/unPublish")
+    .then((res) => res.data);
+  return response;
+};
+export const getQuestion = async (
+  id: string
+): Promise<ApiResponse<PollQuestionResponse>> => {
+  const response: ApiResponse<PollQuestionResponse> = await apiInstance
+    .get(`/Poll/GetPublishedPoll/` + id)
     .then((res) => res.data);
   return response;
 };

@@ -4,7 +4,7 @@ import QRCodeGenerator from "./QRCodeGenerator";
 export const PollDetailsContent = () => {
   const location = useLocation();
   const pollTitle = location.state?.actiivatePoll.data?.title;
-  console.log("ttttttttttttttttttttttt", location.state?.actiivatePoll.data);
+  // console.log("ttttttttttttttttttttttt", location.state?.actiivatePoll.data);
 
   const uniqueId = location.state?.actiivatePoll.data?.uniqueId;
   return (

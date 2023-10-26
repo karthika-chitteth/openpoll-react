@@ -24,3 +24,27 @@ export interface PublishPollResponse {
   uniqueId: string;
   questions: Questions[];
 }
+export interface PollVoteResponse {
+  id: number;
+  pollId: number;
+  title: string;
+  answers: Answers[];
+}
+export interface Answers {
+  questionId: number;
+  title: string;
+  questionType: number;
+  textAnswers: string;
+  multipleChoiceAnswers: Options[];
+}
+export interface Options {
+  optionId: number;
+  title: string;
+  total: number;
+}
+export interface PollQuestionResponse {
+  id: number;
+  title: string;
+  isActive: boolean;
+  questions: Questions[];
+}

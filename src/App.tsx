@@ -9,7 +9,7 @@ function App() {
   const { setValue } = useProfileContext();
 
   useEffect(() => {
-    console.log("abcd", localStorage.getItem("value"));
+    // console.log("abcd", localStorage.getItem("value"));
 
     const storedValue = localStorage.getItem("value");
     if (storedValue) {

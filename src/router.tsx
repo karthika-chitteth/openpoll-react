@@ -5,9 +5,9 @@ import { SignUp } from "./app/pages/auth/signup";
 import { UserDashboard } from "./app/pages/user/dashboard";
 import { CreatePoll } from "./app/pages/polls/create-poll";
 import { PollDetails } from "./app/pages/polls/poll-details";
-
-import BarChart from "./app/components/polls/barchart";
 import { Poll } from "./app/pages/polls/poll";
+import { AudienceLogin } from "./app/pages/polls/audience-login";
+import { PollResult } from "./app/pages/polls/poll-result";
 
 export const router = createBrowserRouter([
   {
@@ -69,13 +69,17 @@ export const router = createBrowserRouter([
     element: "",
     children: [
       {
+        path: "form/:id",
+        element: <Poll />,
+      },
+      {
         path: "result",
-        element: <BarChart />,
+        element: <PollResult />,
+      },
+      {
+        path: ":id",
+        element: <AudienceLogin />,
       },
     ],
-  },
-  {
-    path: "poll/:id",
-    element: <Poll />,
   },
 ]);
