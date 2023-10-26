@@ -5,6 +5,13 @@ export interface CreatePollResponse {
   userId: number;
   questions: Questions[];
 }
+export interface PollQuestionResponse {
+  id: number;
+  title: string;
+  isActive: boolean;
+  questions: Questions[];
+}
+
 interface Questions {
   pollId: number;
   title: string;
@@ -41,10 +48,4 @@ export interface Options {
   optionId: number;
   title: string;
   total: number;
-}
-export interface PollQuestionResponse {
-  id: number;
-  title: string;
-  isActive: boolean;
-  questions: Questions[];
 }
