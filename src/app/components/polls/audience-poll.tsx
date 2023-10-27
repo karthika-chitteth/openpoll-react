@@ -1,12 +1,16 @@
 import { getQuestion } from "../../services/poll.service";
 import { PollQuestionResponse } from "../../models/response/polls/polls.response";
-
+// import * as yup from "yup";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+// import { LoginSchema } from "../../schemas/auth/login.schema";
 
 export const AudiencePoll = () => {
   const { id } = useParams();
   const [data, setData] = useState<PollQuestionResponse | null>(null);
+  const [selectedOption, setSelectedOption] = useState<number | undefined>(
+    undefined
+  ); // Change initial state to undefined
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,9 +27,57 @@ export const AudiencePoll = () => {
     fetchData();
   }, [id]);
 
-  const handleSubmitClick = async () => {
-    // Implement your submit logic here
-  };
+  // const [formData, setFormData] = useState({
+  //   pollId: "",
+  //   questionId: "",
+  //   questionType: "",
+  //   answer1: "",
+  //   voterName: "",
+  // });
+  // const [formErrors, setFormErrors] = useState({
+  //   pollId: null,
+  //   questionId: "",
+  //   questionType: "",
+  //   answer1: "",
+  //   voterName: "",
+  // });
+  // console.log(formErrors);
+
+  // // const navigate = useNavigate();
+
+  // async function handleSubmitClick(e: React.FormEvent<HTMLFormElement>) {
+  //   e.preventDefault();
+
+  //   try {
+  //     await LoginSchema.validate(formData, { abortEarly: false });
+  //     //   const response = await register({
+  //     // const response = await vote({
+  //     //   pollId: formData.pollId,
+  //     //   questionId: formData.email,
+  //     //   questionType: 0,
+  //     //   answer1: 0,
+  //     //   voterName: "",
+  //     // });
+  //   } catch (error: unknown) {
+  //     console.error(error);
+  //     if (error instanceof yup.ValidationError) {
+  //       error.inner.forEach((err: yup.ValidationError) => {
+  //         const propertyName = err.path?.toString() as string; // Use type assertion
+  //         setFormErrors((prevErrors) => ({
+  //           ...prevErrors,
+  //           [propertyName]: err.message,
+  //         }));
+  //       });
+  //     } else {
+  //       // Handle other types of errors (e.g., network errors)
+  //       console.error(error);
+  //     }
+  //   }
+  // }
+
+  // // function handleChange(e: ChangeEvent<HTMLInputElement>): void {
+  // //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  // // }
 
   return (
     <>
@@ -47,8 +99,12 @@ export const AudiencePoll = () => {
                   <div className="flex items-center h-5">
                     <input
                       id={`option-${optionIndex}`}
-                      name={`option-${optionIndex}`}
-                      type="checkbox"
+                      name="selectedOption"
+                      type="radio"
+                      value={optionIndex}
+                      checked={selectedOption === optionIndex}
+                      // onChange={(e) => handleChange(e)}
+                      onChange={() => setSelectedOption(optionIndex)}
                       className="border-gray-200 rounded dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
                     />
                   </div>
@@ -63,10 +119,14 @@ export const AudiencePoll = () => {
             ))}
           </ul>
 
+          {/* {formErrors && (
+            <div className="text-red-500">{formErrors.answer1}</div>
+          )} */}
+
           <button
             type="button"
             className="w-[15rem] h-[3rem] mt-5 py-1 px-1 inline-flex justify-center relative  items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-            onClick={handleSubmitClick}
+            // onClick={handleSubmitClick}
           >
             Submit
           </button>

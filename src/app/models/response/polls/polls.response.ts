@@ -31,6 +31,15 @@ export interface PublishPollResponse {
   uniqueId: string;
   questions: Questions[];
 }
+export interface VoteResponse {
+  pollId: number;
+  questionId: number;
+  questionType: number;
+  answer1: number;
+  answer2: string;
+  voterName: string;
+}
+
 export interface PollVoteResponse {
   id: number;
   pollId: number;

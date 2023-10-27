@@ -1,9 +1,14 @@
-import { CreatePollPayload } from "../models/payload/polls/polls.payload.model";
+import {
+  CreatePollPayload,
+  VotePayload,
+} from "../models/payload/polls/polls.payload.model";
 import { ApiResponse } from "../models/response/api.response";
 import {
   CreatePollResponse,
   PollQuestionResponse,
+  // PollVoteResponse,
   PublishPollResponse,
+  VoteResponse,
 } from "../models/response/polls/polls.response";
 import apiInstance from "./api.service";
 
@@ -69,6 +74,15 @@ export const getQuestion = async (
 ): Promise<ApiResponse<PollQuestionResponse>> => {
   const response: ApiResponse<PollQuestionResponse> = await apiInstance
     .get(`/Poll/GetPublishedPoll/` + id)
+    .then((res) => res.data);
+  return response;
+};
+
+export const vote = async (
+  payload: VotePayload
+): Promise<ApiResponse<VoteResponse>> => {
+  const response: ApiResponse<VoteResponse> = await apiInstance
+    .post(`/vote`, payload)
     .then((res) => res.data);
   return response;
 };
