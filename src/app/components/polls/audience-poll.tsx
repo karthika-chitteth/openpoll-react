@@ -1,16 +1,18 @@
-import { getQuestion } from "../../services/poll.service";
+import { getQuestion, vote } from "../../services/poll.service";
 import { PollQuestionResponse } from "../../models/response/polls/polls.response";
-// import * as yup from "yup";
+import * as yup from "yup";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-// import { LoginSchema } from "../../schemas/auth/login.schema";
+import { ChangeEvent, useEffect, useState } from "react";
+import { PollSchema } from "../../schemas/poll/poll.schema";
 
 export const AudiencePoll = () => {
   const { id } = useParams();
   const [data, setData] = useState<PollQuestionResponse | null>(null);
-  const [selectedOption, setSelectedOption] = useState<number | undefined>(
-    undefined
-  ); // Change initial state to undefined
+  const [formErrors, setFormErrors] = useState({
+    selectedOption: null, // Initialize with null or an empty string
+    voterName: null, // Initialize with null or an empty string
+  });
+  localStorage.setItem("uniqueId", JSON.stringify(id));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,58 +28,62 @@ export const AudiencePoll = () => {
 
     fetchData();
   }, [id]);
+  useEffect(() => {
+    if (data) {
+      setFormData({
+        pollId: data.id || 0,
+        questionId: data.questions[0]?.id || 0,
+        questionType: data.questions[0]?.questionType || 0,
+        selectedOption: 0,
+        voterName: "",
+      });
+    }
+  }, [data]);
+  console.log(".....data", data, data?.id);
+  const [formData, setFormData] = useState({
+    pollId: data?.id || 0,
+    questionId: data?.questions[0]?.id || 0,
+    questionType: data?.questions[0]?.questionType || 0,
+    selectedOption: 0,
+    voterName: "",
+  });
 
-  // const [formData, setFormData] = useState({
-  //   pollId: "",
-  //   questionId: "",
-  //   questionType: "",
-  //   answer1: "",
-  //   voterName: "",
-  // });
-  // const [formErrors, setFormErrors] = useState({
-  //   pollId: null,
-  //   questionId: "",
-  //   questionType: "",
-  //   answer1: "",
-  //   voterName: "",
-  // });
-  // console.log(formErrors);
+  async function handleSubmitClick(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    try {
+      await PollSchema.validate(formData, { abortEarly: false });
+      const response = await vote({
+        pollId: formData.pollId,
+        questionId: formData.questionId,
+        questionType: formData.questionType,
+        answer1: formData.selectedOption, // Use the selected option
+        voterName: formData.voterName,
+      });
 
-  // // const navigate = useNavigate();
+      console.log("Response:", response);
+    } catch (error: unknown) {
+      console.error(error);
+      if (error instanceof yup.ValidationError) {
+        error.inner.forEach((err: yup.ValidationError) => {
+          const propertyName = err.path ? err.path.toString() : "";
+          setFormErrors((prevErrors) => ({
+            ...prevErrors,
+            [propertyName]: err.message,
+          }));
+        });
+      } else {
+        console.error(error);
+      }
+    }
+  }
 
-  // async function handleSubmitClick(e: React.FormEvent<HTMLFormElement>) {
-  //   e.preventDefault();
+  function handleChange(e: ChangeEvent<HTMLInputElement>): void {
+    const { name, value } = e.target;
+    // Parse the input value as a number, and use a default value (e.g., 0) if parsing fails
+    const numberValue = parseFloat(value) || 0;
 
-  //   try {
-  //     await LoginSchema.validate(formData, { abortEarly: false });
-  //     //   const response = await register({
-  //     // const response = await vote({
-  //     //   pollId: formData.pollId,
-  //     //   questionId: formData.email,
-  //     //   questionType: 0,
-  //     //   answer1: 0,
-  //     //   voterName: "",
-  //     // });
-  //   } catch (error: unknown) {
-  //     console.error(error);
-  //     if (error instanceof yup.ValidationError) {
-  //       error.inner.forEach((err: yup.ValidationError) => {
-  //         const propertyName = err.path?.toString() as string; // Use type assertion
-  //         setFormErrors((prevErrors) => ({
-  //           ...prevErrors,
-  //           [propertyName]: err.message,
-  //         }));
-  //       });
-  //     } else {
-  //       // Handle other types of errors (e.g., network errors)
-  //       console.error(error);
-  //     }
-  //   }
-  // }
-
-  // // function handleChange(e: ChangeEvent<HTMLInputElement>): void {
-  // //   setFormData({ ...formData, [e.target.name]: e.target.value });
-  // // }
+    setFormData({ ...formData, [name]: numberValue });
+  }
 
   return (
     <>
@@ -90,28 +96,26 @@ export const AudiencePoll = () => {
           </>
 
           <ul className="max-w-sm flex flex-col">
-            {data.questions[0].options.map((option, optionIndex) => (
+            {data.questions[0].options.map((option) => (
               <li
                 className="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border text-gray-800 -mt-px"
-                key={optionIndex}
+                key={option.id} // Use the 'id' of the option as the key
               >
                 <div className="relative flex items-start w-full">
                   <div className="flex items-center h-5">
                     <input
-                      id={`option-${optionIndex}`}
+                      id={`option-${option.id}`} // Use the 'id' of the option as the input ID
                       name="selectedOption"
                       type="radio"
-                      value={optionIndex}
-                      checked={selectedOption === optionIndex}
-                      // onChange={(e) => handleChange(e)}
-                      onChange={() => setSelectedOption(optionIndex)}
+                      value={option.id} // Use the 'id' of the option as the value
+                      checked={formData.selectedOption === option.id} // Compare with the 'id' of the selected option
+                      onChange={(e) => handleChange(e)}
                       className="border-gray-200 rounded dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
                     />
                   </div>
                   <label
-                    htmlFor={`option-${optionIndex}`}
-                    className="ml-3.5 block w-full text-sm text-gray-600 dark:text-gray-500"
-                  >
+                    htmlFor={`option-${option.id}`} // Use the 'id' of the option as the label's 'for' attribute
+                    className="ml-3.5 block w-full text-sm text-gray-600 dark:text-gray-500">
                     {option.title}
                   </label>
                 </div>
@@ -119,17 +123,15 @@ export const AudiencePoll = () => {
             ))}
           </ul>
 
-          {/* {formErrors && (
-            <div className="text-red-500">{formErrors.answer1}</div>
-          )} */}
-
           <button
             type="button"
             className="w-[15rem] h-[3rem] mt-5 py-1 px-1 inline-flex justify-center relative  items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-            // onClick={handleSubmitClick}
-          >
+            onClick={handleSubmitClick}>
             Submit
           </button>
+          {formErrors.selectedOption && (
+            <div className="text-red-500">{formErrors.selectedOption}</div>
+          )}
         </div>
       )}
     </>

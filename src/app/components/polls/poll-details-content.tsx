@@ -1,11 +1,11 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 import QRCodeGenerator from "./QRCodeGenerator";
 export const PollDetailsContent = () => {
   const location = useLocation();
   const pollTitle = location.state?.actiivatePoll.data?.title;
   // console.log("ttttttttttttttttttttttt", location.state?.actiivatePoll.data);
-
+  const { id } = useParams();
   const uniqueId = location.state?.actiivatePoll.data?.uniqueId;
   return (
     <>
@@ -33,7 +33,7 @@ export const PollDetailsContent = () => {
           </div>
           <a
             className="py-2 px-3 my-5 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-            href="/poll/result">
+            href={"/poll/result/" + id}>
             Result
           </a>
         </div>

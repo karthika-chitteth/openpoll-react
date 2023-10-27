@@ -1,61 +1,90 @@
-import React, { useEffect, useRef } from "react";
-import Chart, { ChartType } from "chart.js/auto";
+import { useEffect, useState } from "react";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ChartOptions,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+import { useParams } from "react-router-dom";
+import { pollResults } from "../../services/poll.service";
 
-const BarChart: React.FC = () => {
-  const chartContainer = useRef<HTMLCanvasElement | null>(null);
-  const chartInstance = useRef<Chart<ChartType> | null>(null);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+export default function BarChart() {
+  const { id } = useParams();
+  const [data, setData] = useState<number[] | null>();
+  const [labels, setLabels] = useState<string[] | null>();
 
   useEffect(() => {
-    if (chartContainer.current) {
-      if (chartInstance.current) {
-        chartInstance.current.destroy();
-      }
-
-      const ctx = chartContainer.current.getContext("2d");
-      if (ctx) {
-        chartInstance.current = new Chart(ctx, {
-          type: "bar",
-          data: {
-            labels: ["Category A", "Category B", "Category C", "Category D"],
-            datasets: [
-              {
-                label: "Horizontal Bar Chart",
-                backgroundColor: "rgba(75, 192, 192, 0.6)",
-                borderColor: "rgba(75, 192, 192, 1)",
-                borderWidth: 1,
-                data: [12, 19, 3, 5], // Replace with your data
-              },
-            ],
-          },
-          options: {
-            indexAxis: "y", // Set the indexAxis to "y" for horizontal bars
-            scales: {
-              x: {
-                beginAtZero: true,
-              },
-            },
-          },
-        });
-      }
-    }
-
-    return () => {
-      if (chartInstance.current) {
-        chartInstance.current.destroy();
+    const fetchData = async () => {
+      try {
+        const response = await pollResults(Number(id));
+        const pollResult = response?.data?.answers[0].multipleChoiceAnswers.map(
+          (answer) => answer.total
+        );
+        const labels = response?.data?.answers[0].multipleChoiceAnswers.map(
+          (answer) => answer.title
+        );
+        setData(pollResult);
+        setLabels(labels);
+        console.log("pollResult", pollResult, "response", response);
+      } catch (error) {
+        console.error("Error fetching data from the API:", error);
       }
     };
-  }, []);
+
+    fetchData();
+  }, [id]);
+
+  const options: ChartOptions = {
+    responsive: true,
+    indexAxis: "y", // This makes the chart horizontal
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "", // Update the chart title
+      },
+    },
+  };
+
+  // const labels = ["option1", "option2", "option3", "option4"];
+
+  const chartData = {
+    labels: labels || [],
+    datasets: [
+      {
+        label: "Votes",
+        data: data,
+        backgroundColor: "#3b82f6",
+        categoryPercentage: 1, // Adjust this value as needed
+        barPercentage: 0.3, // Adjust this value as needed
+      },
+    ],
+  };
 
   return (
-    <div className="max-w-[85rem] mx-auto px-4 sm:px-4 lg:px-4 mt-5">
-      <h2>Poll result</h2>
-      <canvas
-        ref={chartContainer}
-        id="horizontalBarChart"
-        width="400"
-        height="200"></canvas>
-    </div>
+    <>
+      <div className="max-w-[85rem] w-full mx-auto px-4 mt-5 flex flex-col">
+        <h1 className="text-center block text-5xl font-bold text-gray-800  dark:text-white mb-5">
+          Poll Result
+        </h1>
+        <Bar data={chartData} options={options} />
+      </div>
+    </>
   );
-};
-
-export default BarChart;
+}

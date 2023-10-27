@@ -6,6 +6,7 @@ import { ApiResponse } from "../models/response/api.response";
 import {
   CreatePollResponse,
   PollQuestionResponse,
+  PollVoteResponse,
   // PollVoteResponse,
   PublishPollResponse,
   VoteResponse,
@@ -83,6 +84,14 @@ export const vote = async (
 ): Promise<ApiResponse<VoteResponse>> => {
   const response: ApiResponse<VoteResponse> = await apiInstance
     .post(`/vote`, payload)
+    .then((res) => res.data);
+  return response;
+};
+export const pollResults = async (
+  id: number
+): Promise<ApiResponse<PollVoteResponse>> => {
+  const response: ApiResponse<PollVoteResponse> = await apiInstance
+    .get(`/Vote/` + id)
     .then((res) => res.data);
   return response;
 };

@@ -1,11 +1,18 @@
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export const AudienceForm = () => {
-  const navigate = useNavigate();
   // Async function to handle the create button click
   const { id } = useParams();
   console.log(id);
-
+  const navigate = useNavigate();
+  const uniqueId = localStorage.getItem("uniqueId");
+  useEffect(() => {
+    if (uniqueId === JSON.stringify(id)) {
+      navigate("/auth/signin");
+    }
+    console.log("uniqueId", uniqueId, "id", JSON.stringify(id));
+  });
   const saveName = async () => {};
   const pollQuestion = async () => {
     navigate("/poll/form/" + id);

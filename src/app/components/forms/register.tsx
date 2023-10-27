@@ -43,7 +43,6 @@ export const Register = () => {
       // console.log("response.data?.name", response.data.name);
       // setValue("John");
     } catch (error: unknown) {
-      console.error(error);
       if (error instanceof yup.ValidationError) {
         error.inner.forEach((err: yup.ValidationError) => {
           const propertyName = err.path?.toString() as string; // Use type assertion
@@ -104,6 +103,9 @@ export const Register = () => {
                                             dark:border-gray-700 dark:text-gray-400"
                         placeholder="example@opentrends.net"
                       />
+                      <p className="text-xs text-red-600 mt-2" id="email-error">
+                        {formErrors.email} {/* Display error message here */}
+                      </p>
                       <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3" />
                     </div>
                     <p className="text-xs text-red-600 mt-2" id="email-error">

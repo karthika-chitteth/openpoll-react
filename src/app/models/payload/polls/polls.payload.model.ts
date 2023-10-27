@@ -15,6 +15,6 @@ export interface VotePayload {
   questionId: number;
   questionType: number;
   answer1: number;
-  answer2: string;
+  // answer2: string;
   voterName: string;
 }

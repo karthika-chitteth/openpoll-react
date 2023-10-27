@@ -1,20 +1,21 @@
 import logo from "../../assets/logo.svg";
 import { useProfileContext } from "../../context/profile.context";
 import { useNavigate } from "react-router-dom";
-
 export const TopBar = () => {
   const navigate = useNavigate();
   const { value } = useProfileContext();
-  // console.log("Value", value);
+
   const storedValue = localStorage.getItem("value");
-  // console.log("storedValue", storedValue);
-  // const location = useLocation();
-  // const pathname = location.pathname;
-  // const uniqueIdRegex = /\/poll/;
-  // const match = pathname.match(uniqueIdRegex);
+
   if (JSON.stringify(value) === "{}" && storedValue === null) {
     navigate("auth/signin");
   }
+
+  const handleLogout = () => {
+    navigate("auth/signin");
+    localStorage.clear();
+    navigate("auth/signin");
+  };
   return (
     <>
       <header className="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-gray-900 text-sm py-4 dark:bg-gray-800">
@@ -61,6 +62,7 @@ export const TopBar = () => {
             <div className="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:pl-5">
               <button
                 type="button"
+                onClick={handleLogout}
                 className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold  text-white outline-none  transition-all text-sm ">
                 Logout
                 <svg

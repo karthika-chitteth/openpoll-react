@@ -73,7 +73,7 @@ export const router = createBrowserRouter([
         element: <Poll />,
       },
       {
-        path: "result",
+        path: "result/:id",
         element: <PollResult />,
       },
       {

@@ -13,12 +13,14 @@ export interface PollQuestionResponse {
 }
 
 interface Questions {
+  id: number;
   pollId: number;
   title: string;
-  questionType: string;
+  questionType: number;
   options: OptionsPayload[];
 }
 interface OptionsPayload {
+  id: number;
   title: string;
   questionId: number;
 }
