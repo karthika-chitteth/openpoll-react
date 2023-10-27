@@ -1,7 +1,7 @@
 import { getQuestion, vote } from "../../services/poll.service";
 import { PollQuestionResponse } from "../../models/response/polls/polls.response";
 import * as yup from "yup";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ChangeEvent, useEffect, useState } from "react";
 import { PollSchema } from "../../schemas/poll/poll.schema";
 
@@ -12,6 +12,7 @@ export const AudiencePoll = () => {
     selectedOption: null, // Initialize with null or an empty string
     voterName: null, // Initialize with null or an empty string
   });
+  const navigate = useNavigate();
   localStorage.setItem("uniqueId", JSON.stringify(id));
 
   useEffect(() => {
@@ -59,6 +60,7 @@ export const AudiencePoll = () => {
         answer1: formData.selectedOption, // Use the selected option
         voterName: formData.voterName,
       });
+      navigate("/poll/result/" + id);
 
       console.log("Response:", response);
     } catch (error: unknown) {

@@ -21,12 +21,13 @@ export const Register = () => {
     confirmPassword: "",
   });
   const navigate = useNavigate();
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
+    let response;
     try {
       await RegisterSchema.validate(formData, { abortEarly: false });
-      const response = await register({
+      response = await register({
         email: formData.email,
         name: formData.name,
         password: formData.password,
@@ -35,25 +36,25 @@ export const Register = () => {
         navigate("/users");
       }
 
-      // console.log(response);
-
       setValue(response.data.name);
       localStorage.setItem("value", JSON.stringify(response.data.name));
       localStorage.setItem("token", response.data.uniqueId);
-      // console.log("response.data?.name", response.data.name);
-      // setValue("John");
     } catch (error: unknown) {
+      console.log("hhhhhhhhhhhhhhhhhhhhhhhhhh");
+
       if (error instanceof yup.ValidationError) {
         error.inner.forEach((err: yup.ValidationError) => {
-          const propertyName = err.path?.toString() as string; // Use type assertion
+          const propertyName = err.path?.toString() as string;
           setFormErrors((prevErrors) => ({
             ...prevErrors,
             [propertyName]: err.message,
           }));
         });
       } else {
-        // Handle other types of errors (e.g., network errors)
-        console.error(error);
+        console.log("error", response);
+        if (response) {
+          console.log("hjjhjhjhjhjh", response.error);
+        }
       }
     }
   }

@@ -1,5 +1,7 @@
 export interface RegisterResponse {
+  message: string;
   data: Data;
+  error: string;
 }
 export interface Data {
   name: string;
