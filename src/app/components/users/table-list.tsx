@@ -76,17 +76,20 @@ export const TableList = () => {
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                    >
                       Polls
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
+                    >
                       Status
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
+                    >
                       Action
                     </th>
                   </tr>
@@ -95,11 +98,14 @@ export const TableList = () => {
                   {polls.map((poll, index) => (
                     <tr
                       key={index}
-                      className="odd:bg-white text-left even:bg-gray-100 dark:odd:bg-slate-900 dark:even:bg-slate-800">
+                      className="odd:bg-white text-left even:bg-gray-100 dark:odd:bg-slate-900 dark:even:bg-slate-800"
+                    >
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                        {poll.questions.map((question, questionIndex) => (
-                          <div key={questionIndex}>{question.title}</div>
-                        ))}
+                        <a href={`/users/poll-details/${poll.id}`}>
+                          {poll.questions.map((question, questionIndex) => (
+                            <div key={questionIndex}>{question.title}</div>
+                          ))}
+                        </a>
                       </td>
                       <td className="px-6 py-4 text-center whitespace-nowrap text-red-600	text-sm font-medium text-gray-800 dark:text-gray-200">
                         {poll.isActive ? "Active" : "In Active"}
@@ -111,7 +117,8 @@ export const TableList = () => {
                           className="py-2 px-3 mx-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-green-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                           onClick={async () => {
                             await handleActivateClick(poll.id, poll.isActive);
-                          }}>
+                          }}
+                        >
                           {poll.isActive ? "Deactivate" : "Activate"}
                         </button>
                         <button
@@ -119,7 +126,8 @@ export const TableList = () => {
                           className="py-2 px-3 mx-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                           onClick={async () => {
                             await handleEditClick(poll.id);
-                          }}>
+                          }}
+                        >
                           {"Edit"}
                         </button>
                         <button
@@ -127,7 +135,8 @@ export const TableList = () => {
                           className="py-2 px-3 mx-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-red-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                           onClick={async () => {
                             await handleDeleteClick(poll.id);
-                          }}>
+                          }}
+                        >
                           {"Delete"}
                         </button>
                       </td>

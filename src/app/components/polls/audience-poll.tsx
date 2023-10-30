@@ -60,7 +60,7 @@ export const AudiencePoll = () => {
         answer1: formData.selectedOption, // Use the selected option
         voterName: formData.voterName,
       });
-      navigate("/poll/result/" + id);
+      navigate("/poll/success");
 
       console.log("Response:", response);
     } catch (error: unknown) {
@@ -117,7 +117,8 @@ export const AudiencePoll = () => {
                   </div>
                   <label
                     htmlFor={`option-${option.id}`} // Use the 'id' of the option as the label's 'for' attribute
-                    className="ml-3.5 block w-full text-sm text-gray-600 dark:text-gray-500">
+                    className="ml-3.5 block w-full text-sm text-gray-600 dark:text-gray-500"
+                  >
                     {option.title}
                   </label>
                 </div>
@@ -128,7 +129,8 @@ export const AudiencePoll = () => {
           <button
             type="button"
             className="w-[15rem] h-[3rem] mt-5 py-1 px-1 inline-flex justify-center relative  items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-            onClick={handleSubmitClick}>
+            onClick={handleSubmitClick}
+          >
             Submit
           </button>
           {formErrors.selectedOption && (

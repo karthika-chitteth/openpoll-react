@@ -8,6 +8,7 @@ import { PollDetails } from "./app/pages/polls/poll-details";
 import { Poll } from "./app/pages/polls/poll";
 import { AudienceLogin } from "./app/pages/polls/audience-login";
 import { PollResult } from "./app/pages/polls/poll-result";
+import { Success } from "./app/pages/polls/success";
 
 export const router = createBrowserRouter([
   {
@@ -79,6 +80,10 @@ export const router = createBrowserRouter([
       {
         path: ":id",
         element: <AudienceLogin />,
+      },
+      {
+        path: "success",
+        element: <Success />,
       },
     ],
   },

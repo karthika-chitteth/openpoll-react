@@ -1,13 +1,18 @@
 export interface RegisterResponse {
   message: string;
-  data: Data;
+  data: RegisterData;
   error: string;
 }
-export interface Data {
+export interface RegisterData {
   name: string;
   uniqueId: string;
 }
 export interface LoginResponse {
+  message: string;
+  data: LoginData;
+  error: string;
+}
+export interface LoginData {
   name: string;
   email: string;
   uniqueId: string;
