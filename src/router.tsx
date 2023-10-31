@@ -9,6 +9,7 @@ import { Poll } from "./app/pages/polls/poll";
 import { AudienceLogin } from "./app/pages/polls/audience-login";
 import { PollResult } from "./app/pages/polls/poll-result";
 import { Success } from "./app/pages/polls/success";
+import AuthGuard from "./app/guard/authguard";
 
 export const router = createBrowserRouter([
   {
@@ -39,7 +40,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <UserDashboard />,
+        element: (
+          <AuthGuard>
+            <UserDashboard />
+          </AuthGuard>
+        ),
       },
     ],
   },
@@ -49,19 +54,28 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "create-poll",
-        element: <CreatePoll isEdit={false} />,
+        element: (
+          <AuthGuard>
+            <CreatePoll isEdit={false} />
+          </AuthGuard>
+        ),
       },
-      {
-        path: "edit-poll/:id",
-        element: <CreatePoll isEdit={false} />,
-      },
+
       {
         path: "poll-details",
-        element: <PollDetails />,
+        element: (
+          <AuthGuard>
+            <PollDetails />
+          </AuthGuard>
+        ),
       },
       {
         path: "poll-details/:id",
-        element: <PollDetails />,
+        element: (
+          <AuthGuard>
+            <PollDetails />
+          </AuthGuard>
+        ),
       },
     ],
   },
@@ -75,11 +89,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "result/:id",
-        element: <PollResult />,
+        element: (
+          <AuthGuard>
+            <PollResult />
+          </AuthGuard>
+        ),
       },
       {
         path: ":id",
-        element: <AudienceLogin />,
+        element: (
+          <AuthGuard>
+            <AudienceLogin />
+          </AuthGuard>
+        ),
       },
       {
         path: "success",

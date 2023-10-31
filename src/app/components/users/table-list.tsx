@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 
 export const TableList = () => {
   const [polls, setPolls] = useState<CreatePollResponse[]>([]);
-
   useEffect(() => {
     const fetchData = async () => {
       const pollData = await listPoll();
@@ -49,10 +48,12 @@ export const TableList = () => {
     const actiivatePoll = isActivate
       ? await deactivatePoll(id)
       : await activatePoll(id);
+
     if (!isActivate) {
       navigate(`/users/poll-details/${id}`, {
         state: { actiivatePoll },
       });
+      console.log("actiivatePoll", actiivatePoll);
     }
     if (actiivatePoll.message === "Success") {
       // If the delete operation was successful, fetch the updated list of polls
@@ -101,20 +102,32 @@ export const TableList = () => {
                       className="odd:bg-white text-left even:bg-gray-100 dark:odd:bg-slate-900 dark:even:bg-slate-800"
                     >
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                        <a href={`/users/poll-details/${poll.id}`}>
-                          {poll.questions.map((question, questionIndex) => (
+                        {poll.isActive ? (
+                          <a href={`/users/poll-details/${poll.id}`}>
+                            {poll.questions.map((question, questionIndex) => (
+                              <div key={questionIndex}>{question.title}</div>
+                            ))}
+                          </a>
+                        ) : (
+                          poll.questions.map((question, questionIndex) => (
                             <div key={questionIndex}>{question.title}</div>
-                          ))}
-                        </a>
+                          ))
+                        )}
                       </td>
-                      <td className="px-6 py-4 text-center whitespace-nowrap text-red-600	text-sm font-medium text-gray-800 dark:text-gray-200">
+                      <td
+                        className={`px-6 py-4 text-center whitespace-nowrap 	text-sm font-medium text-gray-800 dark:text-gray-200 ${
+                          poll.isActive ? "text-green-500" : "text-red-500"
+                        } `}
+                      >
                         {poll.isActive ? "Active" : "In Active"}
                       </td>
 
                       <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                         <button
                           type="button"
-                          className="py-2 px-3 mx-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-green-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                          className={`py-2 px-3 mx-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold ${
+                            poll.isActive ? "bg-red-500" : "bg-green-500"
+                          } text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800`}
                           onClick={async () => {
                             await handleActivateClick(poll.id, poll.isActive);
                           }}

@@ -60,6 +60,7 @@ export const AudiencePoll = () => {
         answer1: formData.selectedOption, // Use the selected option
         voterName: formData.voterName,
       });
+      localStorage.clear();
       navigate("/poll/success");
 
       console.log("Response:", response);

@@ -7,6 +7,7 @@ export const PollDetailsContent = () => {
   // console.log("ttttttttttttttttttttttt", location.state?.actiivatePoll.data);
   const { id } = useParams();
   const uniqueId = location.state?.actiivatePoll.data?.uniqueId;
+  localStorage.setItem("uniqueId", uniqueId);
   return (
     <>
       <div className="max-w-[85rem] mx-auto px-4 sm:px-4 lg:px-4 mt-5">
@@ -17,7 +18,8 @@ export const PollDetailsContent = () => {
             </h1>
             <a
               className="mt-5 text-lg text-blue-500 dark:text-blue-100 "
-              href={"http://localhost:4001/poll/" + uniqueId}>
+              href={"http://localhost:4001/poll/" + uniqueId}
+            >
               Poll here
             </a>
 
@@ -33,7 +35,8 @@ export const PollDetailsContent = () => {
           </div>
           <a
             className="py-2 px-3 my-5 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-            href={"/poll/result/" + id}>
+            href={"/poll/result/" + id}
+          >
             Result
           </a>
         </div>
