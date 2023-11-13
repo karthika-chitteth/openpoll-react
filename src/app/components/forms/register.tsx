@@ -1,9 +1,13 @@
-import { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { register } from "../../services/user.service";
 import { RegisterSchema } from "../../schemas/auth/register.schema";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { useProfileContext } from "../../context/profile.context";
+
 export const Register = () => {
+  const { setValue } = useProfileContext();
+
   const [formData, setFormData] = useState({
     email: "", // required
     name: "", // required
@@ -17,32 +21,48 @@ export const Register = () => {
     confirmPassword: "",
   });
   const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(false);
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
+    setIsLoading(true);
+    let response;
     try {
       await RegisterSchema.validate(formData, { abortEarly: false });
-      //   const response = await register({
-      await register({
+      setIsLoading(false);
+      response = await register({
         email: formData.email,
         name: formData.name,
         password: formData.password,
       });
-      navigate("/user");
-      //   console.log(response.data);
+      // if (response.message === "Failure") {
+      //   console.log("API Error:", response.error);
+      //   // You can also handle this error further if needed
+      // } else
+      if (response.data.name) {
+        navigate("/users");
+      }
+
+      setValue(response.data.name);
+      localStorage.setItem("value", response.data.name);
+      localStorage.setItem("token", response.data.uniqueId);
     } catch (error: unknown) {
-      console.error(error);
+      console.log("hhhhhhhhhhhhhhhhhhhhhhhhhh");
+      setIsLoading(false);
       if (error instanceof yup.ValidationError) {
         error.inner.forEach((err: yup.ValidationError) => {
-          const propertyName = err.path?.toString() as string; // Use type assertion
+          const propertyName = err.path?.toString() as string;
           setFormErrors((prevErrors) => ({
             ...prevErrors,
             [propertyName]: err.message,
           }));
         });
       } else {
-        // Handle other types of errors (e.g., network errors)
-        console.error(error);
+        console.log("error", response);
+        if (response) {
+          console.log("hjjhjhjhjhjh", response.error);
+        }
       }
     }
   }
@@ -93,6 +113,9 @@ export const Register = () => {
                                             dark:border-gray-700 dark:text-gray-400"
                         placeholder="example@opentrends.net"
                       />
+                      <p className="text-xs text-red-600 mt-2" id="email-error">
+                        {formErrors.email} {/* Display error message here */}
+                      </p>
                       <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3" />
                     </div>
                     <p className="text-xs text-red-600 mt-2" id="email-error">
@@ -197,6 +220,9 @@ export const Register = () => {
                     type="submit"
                     className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                   >
+                    {isLoading && (
+                      <span className="animate-spin inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-white rounded-full"></span>
+                    )}
                     Sign up
                   </button>
                 </div>

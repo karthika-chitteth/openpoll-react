@@ -1,12 +1,19 @@
-import { User } from "../../user";
-
 export interface RegisterResponse {
-  user: User;
-  access_token: string;
-  refreshToken?: string;
+  message: string;
+  data: RegisterData;
+  error: string;
+}
+export interface RegisterData {
+  name: string;
+  uniqueId: string;
 }
 export interface LoginResponse {
-  user: User;
-  access_token: string;
-  refreshToken?: string;
+  message: string;
+  data: LoginData;
+  error: string;
+}
+export interface LoginData {
+  name: string;
+  email: string;
+  uniqueId: string;
 }

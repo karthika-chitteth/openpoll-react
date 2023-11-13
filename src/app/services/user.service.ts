@@ -2,7 +2,7 @@ import {
   LoginPayload,
   RegisterPayload,
 } from "../models/payload/auth/user.payload.model";
-import { ApiResponse } from "../models/response/api.response";
+// import { ApiResponse } from "../models/response/api.response";
 import {
   LoginResponse,
   RegisterResponse,
@@ -12,17 +12,17 @@ import apiInstance from "./api.service";
 
 export const register = async (
   payload: RegisterPayload
-): Promise<ApiResponse<RegisterResponse>> => {
-  const response: ApiResponse<RegisterResponse> = await apiInstance
-    .post(`/users`, payload)
+): Promise<RegisterResponse> => {
+  const response: RegisterResponse = await apiInstance
+    .post(`User/register`, payload)
+    // .post(`/users`, payload)
     .then((res) => res.data);
   return response;
 };
-export const login = async (
-  payload: LoginPayload
-): Promise<ApiResponse<LoginResponse>> => {
-  const response: ApiResponse<LoginResponse> = await apiInstance
-    .post(`/users`, payload)
+export const login = async (payload: LoginPayload): Promise<LoginResponse> => {
+  const response: LoginResponse = await apiInstance
+    // .post(`/users`, payload)
+    .post(`/User/login`, payload)
     .then((res) => res.data);
   return response;
 };

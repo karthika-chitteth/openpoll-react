@@ -3,32 +3,47 @@ import { useNavigate } from "react-router-dom";
 import { LoginSchema } from "../../schemas/auth/login.schema";
 import * as yup from "yup";
 import { login } from "../../services/user.service";
-
+import { useProfileContext } from "../../context/profile.context";
 export const Login = () => {
+  const { setValue } = useProfileContext();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "", // required
     name: "", // required
     password: "", // required
-    confirmPassword: "", // optional
+    // confirmPassword: "", // optional
   });
   const [formErrors, setFormErrors] = useState({
+    name: "",
     email: "",
     password: "",
   });
   const navigate = useNavigate();
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
+    setIsLoading(true);
     try {
       await LoginSchema.validate(formData, { abortEarly: false });
       //   const response = await register({
-      await login({
+      const response = await login({
+        name: formData.name,
         email: formData.email,
         password: formData.password,
       });
-      navigate("/user");
+      setIsLoading(false);
+      if (response.data.name) {
+        navigate("/users");
+      }
+
       //   console.log(response.data);
+      // console.log(response.name);
+
+      setValue(response.data.name);
+      localStorage.setItem("value", response.data.name);
+      localStorage.setItem("token", response.data.uniqueId);
+      // localStorage.setItem("value", setValue(response.data?.name));
     } catch (error: unknown) {
+      setIsLoading(false);
       console.error(error);
       if (error instanceof yup.ValidationError) {
         error.inner.forEach((err: yup.ValidationError) => {
@@ -135,7 +150,10 @@ export const Login = () => {
                     type="submit"
                     className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                   >
-                    Sign up
+                    {isLoading && (
+                      <span className="animate-spin inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-white rounded-full"></span>
+                    )}
+                    Sign in
                   </button>
                 </div>
               </form>
