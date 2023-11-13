@@ -97,11 +97,7 @@ export const router = createBrowserRouter([
       },
       {
         path: ":id",
-        element: (
-          <AuthGuard>
-            <AudienceLogin />
-          </AuthGuard>
-        ),
+        element: <AudienceLogin />,
       },
       {
         path: "success",

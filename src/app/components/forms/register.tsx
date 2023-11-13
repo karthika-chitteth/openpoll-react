@@ -22,11 +22,15 @@ export const Register = () => {
   });
   const navigate = useNavigate();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setIsLoading(true);
     let response;
     try {
       await RegisterSchema.validate(formData, { abortEarly: false });
+      setIsLoading(false);
       response = await register({
         email: formData.email,
         name: formData.name,
@@ -45,7 +49,7 @@ export const Register = () => {
       localStorage.setItem("token", response.data.uniqueId);
     } catch (error: unknown) {
       console.log("hhhhhhhhhhhhhhhhhhhhhhhhhh");
-
+      setIsLoading(false);
       if (error instanceof yup.ValidationError) {
         error.inner.forEach((err: yup.ValidationError) => {
           const propertyName = err.path?.toString() as string;
@@ -216,6 +220,9 @@ export const Register = () => {
                     type="submit"
                     className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                   >
+                    {isLoading && (
+                      <span className="animate-spin inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-white rounded-full"></span>
+                    )}
                     Sign up
                   </button>
                 </div>

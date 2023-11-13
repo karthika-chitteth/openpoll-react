@@ -2,9 +2,9 @@ import { AudiencePoll } from "../../components/polls/audience-poll";
 import { TopBar } from "../../components/users/topbar";
 
 export const Poll = () => {
-  const uniqueId = localStorage.getItem("uniqueId");
+  const submited = sessionStorage.getItem("openpoll-submitted");
 
-  return uniqueId !== null ? (
+  return submited == null ? (
     <>
       <div className=" h-[100vh]">
         <TopBar />

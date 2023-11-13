@@ -13,7 +13,7 @@ export const AudiencePoll = () => {
     voterName: null, // Initialize with null or an empty string
   });
   const navigate = useNavigate();
-  localStorage.setItem("uniqueId", JSON.stringify(id));
+  sessionStorage.setItem("openpoll-submitted", "1");
 
   useEffect(() => {
     const fetchData = async () => {
