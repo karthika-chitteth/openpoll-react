@@ -40,7 +40,7 @@ export const Login = () => {
 
       setValue(response.data.name);
       localStorage.setItem("value", response.data.name);
-      localStorage.setItem("token", response.data.uniqueId);
+      localStorage.setItem("token", response.data.token);
       // localStorage.setItem("value", setValue(response.data?.name));
     } catch (error: unknown) {
       setIsLoading(false);

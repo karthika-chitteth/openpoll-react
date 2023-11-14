@@ -15,5 +15,5 @@ export interface LoginResponse {
 export interface LoginData {
   name: string;
   email: string;
-  uniqueId: string;
+  token: string;
 }
