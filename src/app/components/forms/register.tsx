@@ -46,7 +46,7 @@ export const Register = () => {
 
       setValue(response.data.name);
       localStorage.setItem("value", response.data.name);
-      localStorage.setItem("token", response.data.uniqueId);
+      localStorage.setItem("token", response.data.token);
     } catch (error: unknown) {
       console.log("hhhhhhhhhhhhhhhhhhhhhhhhhh");
       setIsLoading(false);

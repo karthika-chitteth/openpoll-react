@@ -5,7 +5,7 @@ export interface RegisterResponse {
 }
 export interface RegisterData {
   name: string;
-  uniqueId: string;
+  token: string;
 }
 export interface LoginResponse {
   message: string;
