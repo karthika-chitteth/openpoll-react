@@ -4,6 +4,7 @@ export interface CreatePollResponse {
   isActive: boolean;
   userId: number;
   questions: Questions[];
+  uniqueId?: string;
 }
 export interface PollQuestionResponse {
   id: number;

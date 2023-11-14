@@ -18,3 +18,4 @@ export interface VotePayload {
   // answer2: string;
   voterName: string;
 }
+

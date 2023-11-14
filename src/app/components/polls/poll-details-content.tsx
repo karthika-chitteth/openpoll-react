@@ -1,23 +1,28 @@
 import { useLocation, useParams } from "react-router-dom";
 
 import QRCodeGenerator from "./QRCodeGenerator";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getPoll } from "../../services/poll.service";
+import { CreatePollResponse } from "../../models/response/polls/polls.response";
+
 export const PollDetailsContent = () => {
   const location = useLocation();
   const pollTitle = location.state?.actiivatePoll.data?.title;
   const { id } = useParams();
 
-  const getPollDetails = async (id) => {
-    const poll = await getPoll(id);
-    console.log("poll", poll);
+  const [poll, setPoll] = useState<CreatePollResponse>();
+
+  const getPollDetails = async (id: number | undefined) => {
+    if (id) {
+      const poll = await getPoll(id);
+      setPoll(poll.data);
+    }
   };
 
   useEffect(() => {
-    getPollDetails(id);
+    getPollDetails(id ? +id : undefined);
   }, [id]);
-  const uniqueId = location.state?.actiivatePoll.data?.uniqueId;
-  localStorage.setItem("uniqueId", uniqueId);
+
   return (
     <>
       <div className="max-w-[85rem] mx-auto px-4 sm:px-4 lg:px-4 mt-5">
@@ -28,7 +33,7 @@ export const PollDetailsContent = () => {
             </h1>
             <a
               className="mt-5 text-lg text-blue-500 dark:text-blue-100 "
-              href={"/poll/" + uniqueId}
+              href={"/poll/" + poll?.uniqueId}
             >
               Poll here
             </a>
