@@ -89,7 +89,7 @@ paths:
                     - label: "Option 3"
                       id: "3"
                 isPublished: true
-                url: "http://localhost:3000/poll/1"
+                url: "/poll/1"
 
   /poll/create:
     post:
@@ -193,7 +193,7 @@ paths:
                   label: "Poll 1"
                   id: "1"
                   isPublished: true
-                  url: "http://localhost:3000/poll/1"
+                  url: "/poll/1"
 
   /poll/{id}/unpublish:
     post:

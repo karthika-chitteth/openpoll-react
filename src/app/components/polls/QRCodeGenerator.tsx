@@ -13,7 +13,7 @@ function QRCode(props: { value: string; size: number }) {
 function QRCodeGenerator() {
   const location = useLocation();
   const uniqueId = location.state?.actiivatePoll.data?.uniqueId;
-  const qrCodeValue = "http://localhost:4001/users/" + uniqueId;
+  const qrCodeValue = "/users/" + uniqueId;
 
   return <div>{qrCodeValue && <QRCode value={qrCodeValue} size={508} />}</div>;
 }
