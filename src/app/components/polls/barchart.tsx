@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,9 +9,9 @@ import {
   Legend,
   ChartOptions,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
-import { useParams } from "react-router-dom";
-import { pollResults } from "../../services/poll.service";
+import {Bar} from "react-chartjs-2";
+import {useParams} from "react-router-dom";
+import {pollResults} from "../../services/poll.service";
 
 ChartJS.register(
   CategoryScale,
@@ -23,7 +23,7 @@ ChartJS.register(
 );
 
 export default function BarChart() {
-  const { id } = useParams();
+  const {id} = useParams();
   const [data, setData] = useState<number[] | null>();
   const [labels, setLabels] = useState<string[] | null>();
 
@@ -50,7 +50,7 @@ export default function BarChart() {
 
   const options: ChartOptions = {
     responsive: true,
-    indexAxis: "y", // This makes the chart horizontal
+    indexAxis: "x",
     plugins: {
       legend: {
         position: "top",
