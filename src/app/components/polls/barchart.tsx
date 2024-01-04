@@ -48,7 +48,7 @@ export default function BarChart() {
     fetchData();
   }, [id]);
 
-  const options: ChartOptions = {
+  const options: ChartOptions<"bar"> = {
     responsive: true,
     indexAxis: "x",
     plugins: {
