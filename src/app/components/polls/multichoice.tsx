@@ -12,6 +12,7 @@ export const MultiChoice = ({ isEdit }: { isEdit: boolean }) => {
   const [optionCount, setOptionCount] = useState(1);
   const [question, setQuestion] = useState("");
   const [options, setOptions] = useState([""]);
+  const [errorMessage, setErrorMessage] = useState("");
   const addOption = () => {
     setOptionCount(optionCount + 1);
     setOptions([...options, ""]);
@@ -52,8 +53,36 @@ export const MultiChoice = ({ isEdit }: { isEdit: boolean }) => {
     }
   };
 
+  const clearErrorMessage = () => {
+    setErrorMessage("");
+  };
+  const validateFields = () => {
+    const errors = [];
+
+    if (question.trim() === "") {
+      errors.push("Question field is empty");
+    }
+
+    if (options.some((option) => option.trim() === "")) {
+      errors.push("One or more options are empty");
+    }
+
+    if (errors.length > 0) {
+      setErrorMessage(errors.join(", "));
+      return false;
+    }
+
+    setErrorMessage("");
+    return true;
+  };
+
   const handleCreateClick = async () => {
     try {
+      const isValid = validateFields();
+      if (!isValid) {
+        return;
+      }
+
       const questions: QuestionsPayload[] = [
         {
           title: question,
@@ -88,12 +117,10 @@ export const MultiChoice = ({ isEdit }: { isEdit: boolean }) => {
       setOptionCount(0);
       navigate("/users");
     } catch (error) {
-      console.error("Error creating poll:", error);
-      console.error(`Error ${isEdit ? "editing" : "creating"} poll:`, error);
+      console.error("Error creating/editing poll:", error);
     }
   };
 
-  // Render the input fields and options
   const optionInputs = options.map((option, index) => (
     <div className="flex inline-flex" key={index}>
       <input
@@ -105,6 +132,7 @@ export const MultiChoice = ({ isEdit }: { isEdit: boolean }) => {
           const updatedOptions = [...options];
           updatedOptions[index] = e.target.value;
           setOptions(updatedOptions);
+          clearErrorMessage();
         }}
       />
       <button
@@ -137,7 +165,10 @@ export const MultiChoice = ({ isEdit }: { isEdit: boolean }) => {
           className="py-3 px-4 mb-5 block w-full border-solid border-2 border-gray-200  rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
           placeholder="Add question here..."
           value={question}
-          onChange={(e) => setQuestion(e.target.value)}
+          onChange={(e) => {
+            setQuestion(e.target.value);
+            clearErrorMessage();
+          }}
         />
 
         <h2 className="mt-2 mb-5 text-lg  text-gray-900 font-bold">Options</h2>
@@ -161,13 +192,16 @@ export const MultiChoice = ({ isEdit }: { isEdit: boolean }) => {
           </svg>
           Add options
         </button>
+        {errorMessage && (
+          <div className="text-red-500 mt-3 mb-3">{errorMessage}</div>
+        )}
         <div className="flex justify-end">
           <button
             type="button"
             className="w-[15rem] h-[3rem] mt-5 py-1 px-1 inline-flex justify-center relative flex items-end  items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
             onClick={handleCreateClick}
           >
-            {isEdit ? "Edit Poll" : "Create Poll"}
+            {isEdit ? "Save" : "Create Poll"}
           </button>
         </div>
       </div>
