@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import {
   activatePoll,
   deactivatePoll,
   deletePoll,
   listPoll,
 } from "../../services/poll.service";
-import { CreatePollResponse } from "../../models/response/polls/polls.response";
-import { useNavigate } from "react-router-dom";
+import {CreatePollResponse} from "../../models/response/polls/polls.response";
+import {useNavigate} from "react-router-dom";
 
 export const TableList = () => {
   const [polls, setPolls] = useState<CreatePollResponse[]>([]);
@@ -45,7 +45,7 @@ export const TableList = () => {
       : await activatePoll(id);
     if (!isActivate) {
       navigate(`/users/poll-details/${id}`, {
-        state: { actiivatePoll },
+        state: {actiivatePoll},
       });
     }
     if (actiivatePoll.message === "Success") {
@@ -195,6 +195,8 @@ export const TableList = () => {
                             {poll.isActive ? "Deactivate" : "Activate"}
                           </button>
                           {poll.isActive ? (
+                            ""
+                          ) : (
                             <button
                               type="button"
                               className="w-40 py-2 px-3 mx-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
@@ -204,8 +206,6 @@ export const TableList = () => {
                             >
                               {"Edit"}
                             </button>
-                          ) : (
-                            ""
                           )}
                           <button
                             type="button"

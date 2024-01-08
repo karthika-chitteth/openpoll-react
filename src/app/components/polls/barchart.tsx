@@ -26,7 +26,6 @@ export default function BarChart() {
   const {id} = useParams();
   const [data, setData] = useState<number[] | null>();
   const [labels, setLabels] = useState<string[] | null>();
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -83,6 +82,28 @@ export default function BarChart() {
         <h1 className="text-center block text-5xl font-bold text-gray-800  dark:text-white mb-5">
           Poll Result
         </h1>
+        <div>
+          <a
+            className="inline-flex items-center gap-x-1 text-sm text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:hover:text-blue-500"
+            href={"/users/poll-details/" + id}
+          >
+            <svg
+              className="flex-shrink-0 w-4 h-4"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+            Back to poll
+          </a>
+        </div>
         <Bar data={chartData} options={options} />
       </div>
     </>
