@@ -22,7 +22,15 @@ export const PollDetailsContent = () => {
   useEffect(() => {
     getPollDetails(id ? +id : undefined);
   }, [id]);
+  const copyText = window.location.origin + "/poll/" + poll?.uniqueId;
 
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(copyText);
+    } catch (error) {
+      console.error("Failed to copy:", error);
+    }
+  };
   return (
     <>
       <div className="max-w-[85rem] mx-auto px-4 sm:px-4 lg:px-4 mt-5">
@@ -53,22 +61,16 @@ export const PollDetailsContent = () => {
                 Back to dashboard
               </a>
             </div>
-            <div className="my-3 max-w-md w-full inline-flex gap-x-2">
+            <div className="my-3 max-w-lg w-full inline-flex gap-x-2">
               <input
-                type="hidden"
-                id="poll-url-input"
-                value={"/poll/" + poll?.uniqueId}
-              />
-
-              <input
-                id="foo"
+                type="text"
                 className="w-full"
+                id="poll-url-input"
                 value={window.location.origin + "/poll/" + poll?.uniqueId}
               />
-
               <button
                 className="copybtn js-clipboard py-3 px-4 group inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                data-clipboard-target="#foo"
+                onClick={handleCopy}
               >
                 Copy
                 <span className="border-s ps-3.5 dark:border-gray-700">
