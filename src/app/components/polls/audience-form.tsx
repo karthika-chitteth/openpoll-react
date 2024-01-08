@@ -1,10 +1,10 @@
-import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import {useEffect} from "react";
+import {useNavigate, useParams} from "react-router-dom";
 
 export const AudienceForm = () => {
   // Async function to handle the create button click
-  const { id } = useParams();
-  console.log(id);
+  const {id} = useParams();
+
   const navigate = useNavigate();
   const uniqueId = localStorage.getItem("uniqueId");
   useEffect(() => {
@@ -49,7 +49,8 @@ export const AudienceForm = () => {
                   <button
                     type="submit"
                     className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-                    onClick={saveName}>
+                    onClick={saveName}
+                  >
                     continue
                   </button>
                   <p className="mt-5 mb-2 text-sm leading-2 text-gray-600 text-center">
@@ -57,7 +58,8 @@ export const AudienceForm = () => {
                   </p>
                   <button
                     className=" mb-5 text-sm leading-4 text-gray-800 text-center"
-                    onClick={pollQuestion}>
+                    onClick={pollQuestion}
+                  >
                     Continue as anonymous
                   </button>
                 </div>

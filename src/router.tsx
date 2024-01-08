@@ -1,14 +1,14 @@
-import { createBrowserRouter } from "react-router-dom";
-import { Home } from "./app/pages/public/home";
-import { SignIn } from "./app/pages/auth/signin";
-import { SignUp } from "./app/pages/auth/signup";
-import { UserDashboard } from "./app/pages/user/dashboard";
-import { CreatePoll } from "./app/pages/polls/create-poll";
-import { PollDetails } from "./app/pages/polls/poll-details";
-import { Poll } from "./app/pages/polls/poll";
-import { AudienceLogin } from "./app/pages/polls/audience-login";
-import { PollResult } from "./app/pages/polls/poll-result";
-import { Success } from "./app/pages/polls/success";
+import {createBrowserRouter} from "react-router-dom";
+import {Home} from "./app/pages/public/home";
+import {SignIn} from "./app/pages/auth/signin";
+import {SignUp} from "./app/pages/auth/signup";
+import {UserDashboard} from "./app/pages/user/dashboard";
+import {CreatePoll} from "./app/pages/polls/create-poll";
+import {PollDetails} from "./app/pages/polls/poll-details";
+import {Poll} from "./app/pages/polls/poll";
+import {AudienceLogin} from "./app/pages/polls/audience-login";
+import {PollResult} from "./app/pages/polls/poll-result";
+import {Success} from "./app/pages/polls/success";
 import AuthGuard from "./app/guard/authguard";
 
 export const router = createBrowserRouter([
@@ -57,6 +57,14 @@ export const router = createBrowserRouter([
         element: (
           <AuthGuard>
             <CreatePoll isEdit={false} />
+          </AuthGuard>
+        ),
+      },
+      {
+        path: "edit-poll/:id",
+        element: (
+          <AuthGuard>
+            <CreatePoll isEdit={true} />
           </AuthGuard>
         ),
       },
